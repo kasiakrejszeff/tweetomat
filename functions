@@ -1,0 +1,82 @@
+   /*  
+	
+	        String sql = "INSERT INTO Tweet (tweet_id, author, content, " +
+	        	"fav_count, retweet_count) VALUES (?, ' ? ', ' ? ', ?, ?);";
+	        
+	        for (Status tweet : tweets){
+	        	String sql2 = "INSERT INTO Tweet (tweet_id, author, content, " +
+	    	        	"fav_count, retweet_count) VALUES (" +
+	    	        	tweet.getId() + ", ' ? ', ' ? ', ?, ?);";
+	        	
+	        	
+	        	PreparedStatement sqlStatement = c.prepareStatement(sql);
+	        	sqlStatement.setObject(1, tweet.getId());
+	        	sqlStatement.setObject(2, tweet.getUser().getScreenName());
+	        	
+	        	sqlStatement.setObject(3, tweet.getText());
+	        	System.out.println("po3");
+	        //	System.out.println(tweet.getText());
+	        	
+	        	sqlStatement.setObject(4, tweet.getFavoriteCount());
+	        	System.out.println("po4");
+	        	sqlStatement.setObject(5, tweet.getRetweetCount());
+	        	try {
+	        		sqlStatement.executeUpdate();
+	        		System.out.println("jest");
+	        		
+	        	} catch (SQLException e){
+	        		System.err.println("insert:"+ e.getClass().getName() + ": " + e.getMessage() );
+	        	}
+	        }
+	        stmt.close();
+	        c.commit();
+	    } catch ( Exception e ) {
+	    	System.err.println("exc: " +e.getClass().getName() + ": " + e.getMessage() );
+	    }
+	    System.out.println("Records created successfully");		
+	*/
+	    
+	    /*
+	     * Statement stmt = null;
+	    try {
+	    	openConnection();
+	      stmt = c.createStatement();
+	      ResultSet rs = stmt.executeQuery( "SELECT * FROM Users;" );
+	      while ( rs.next() ) {
+	         long id = rs.getLong("id");
+	         String  name = rs.getString("username");
+	         System.out.print( "ID = " + id + ", " );
+	         System.out.println( "NAME = " + name );
+	      }
+	      rs.close();
+	      stmt.close();
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	    System.out.println("writeFriends done successfully");
+	     * 
+	     */
+	    
+	    /*
+		
+		
+		
+		ArrayList <String> result = new ArrayList<String>();
+
+	//    Statement stmt = null;
+	    try {
+	      openConnection();
+	      stmt = c.createStatement();
+	      ResultSet rs = stmt.executeQuery( "SELECT * FROM Users;" );
+	      while ( rs.next() ) {
+	         String name = rs.getString("username");
+	         result.add(name);
+	      }
+	      rs.close();
+	      stmt.close();
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    }
+	    System.out.println("getFriends done successfully");
+*/
