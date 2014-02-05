@@ -87,31 +87,9 @@ public class TDemo {
 			SQLiteJDBC.addTweets(tweets);
 		}
 		
-		long id = SQLiteJDBC.chooseMostFavourited();
-		for(int i = 0; i < 3; ++i){
-		try {
-			Status s = twitter.showStatus(id);
-			System.out.println("TEXT: " + s.getText());
-			System.out.println("retw: " + s.getRetweetCount() + "fav: " + s.getFavoriteCount());
-		} catch (TwitterException e) {
-			System.out.println("Failed to get tweet " + id);
-		}
-		SQLiteJDBC.deleteTopTweet(id);
-		id = SQLiteJDBC.chooseMostRetweeted();
-		
-		try {
-			Status s = twitter.showStatus(id);
-			System.out.println("TEXT: " + s.getText());
-			System.out.println("retw: " + s.getRetweetCount() + "fav: " + s.getFavoriteCount());
-		} catch (TwitterException e) {
-			System.out.println("Failed to get tweet " + id);
-		}
-		SQLiteJDBC.deleteTopTweet(id);
-	}
-		
 		System.out.println("*****************************************");
 		ArrayList<Long> tw = SQLiteJDBC.choose10MostRetweeted();
-		 for (Long t : tw){
+		 for (long t : tw){
 			 try {
 					Status s = twitter.showStatus(t);
 					System.out.println("TEXT: " + s.getText());

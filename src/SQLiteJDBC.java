@@ -26,7 +26,7 @@ public class SQLiteJDBC
 				"username TEXT NOT NULL )";
 		createDB[1] =  
 			"CREATE TABLE Tweet " +
-			"( tweet_id LONG NOT NULL, " +
+			"( tweet_id LONG PRIMARY KEY NOT NULL, " +
 			"author TEXT, " + 
 		//	"author_id LONG REFERENCES Users(id)" +
 		//	" DEFERRABLE INITIALLY DEFERRED, " +
@@ -252,7 +252,7 @@ public class SQLiteJDBC
 	      stmt.executeUpdate(sql);
 	      c.commit();
 	      stmt.close();
-	      c.wait(6000);
+	      c.wait(3000);
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    }
@@ -271,15 +271,13 @@ public class SQLiteJDBC
 	      while ( rs.next() && i < 10) {
 	         Long id = rs.getLong("tweet_id");
 	         result.add(id);
-	         
+	         i++;
 	         String  name = rs.getString("author");
 	         String content = rs.getString("content");
 	         int fav = rs.getInt("fav_count");
 	         int retweet = rs.getInt("retweet_count");
-	         System.out.print( "ID = " + id + ", " );
-	         System.out.println( "AUTHOR = " + name );
-	         System.out.println(content);
-	         System.out.println("fav: "+fav + "  rt: " + retweet);
+	         System.out.print(i + ": ID = " + id + ", " );
+	         System.out.println( "AUTHOR = " + name + "fav: "+fav + "  rt: " + retweet );
 	      }
 	      rs.close();
 	      stmt.close();
@@ -303,15 +301,14 @@ public class SQLiteJDBC
 	      while ( rs.next() && i < 10) {
 	         Long id = rs.getLong("tweet_id");
 	         result.add(id);
-	         
+	         i++;
 	         String  name = rs.getString("author");
 	         String content = rs.getString("content");
 	         int fav = rs.getInt("fav_count");
 	         int retweet = rs.getInt("retweet_count");
-	         System.out.print( "ID = " + id + ", " );
-	         System.out.println( "AUTHOR = " + name );
-	         System.out.println(content);
-	         System.out.println("fav: "+fav + "  rt: " + retweet);
+	         System.out.print(i + ": ID = " + id + ", " );
+	         System.out.println( "AUTHOR = " + name + "fav: "+fav + "  rt: " + retweet );
+
 	      }
 	      rs.close();
 	      stmt.close();
@@ -319,7 +316,7 @@ public class SQLiteJDBC
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
-	    System.out.println("choose retweeted done successfully");
+	    System.out.println("choose favourited done successfully");
 	    return result;
 	  }
 	
