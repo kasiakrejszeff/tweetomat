@@ -10,7 +10,7 @@ public class Main {
 		 TDemo.updateStatus("Jest 5:30 rano.");
 		 TDemo.chooseTweets();
 	//	 SQLiteJDBC.writeTweets();
-		 SQLiteJDBC.chooseMostRetweeted();
+		 
 		// TDemo.chooseTweets();
 	  }
 	 

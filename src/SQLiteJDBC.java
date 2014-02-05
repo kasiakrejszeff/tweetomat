@@ -252,9 +252,75 @@ public class SQLiteJDBC
 	      stmt.executeUpdate(sql);
 	      c.commit();
 	      stmt.close();
-	      //c.wait
+	      c.wait(6000);
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    }
 	}
+	
+	public static ArrayList<Long> choose10MostRetweeted()
+	  {
+	    ArrayList<Long> result = new ArrayList<Long>();
+		Statement stmt = null;
+	    try {
+	    	openConnection();
+	    	stmt = c.createStatement();
+	    	ResultSet rs = stmt.executeQuery( 
+	    			"SELECT * FROM Tweet ORDER BY retweet_count DESC;" );
+	      int i = 0;
+	      while ( rs.next() && i < 10) {
+	         Long id = rs.getLong("tweet_id");
+	         result.add(id);
+	         
+	         String  name = rs.getString("author");
+	         String content = rs.getString("content");
+	         int fav = rs.getInt("fav_count");
+	         int retweet = rs.getInt("retweet_count");
+	         System.out.print( "ID = " + id + ", " );
+	         System.out.println( "AUTHOR = " + name );
+	         System.out.println(content);
+	         System.out.println("fav: "+fav + "  rt: " + retweet);
+	      }
+	      rs.close();
+	      stmt.close();
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	    System.out.println("choose retweeted done successfully");
+	    return result;
+	  }
+	public static ArrayList<Long> choose10MostFav()
+	  {
+	    ArrayList<Long> result = new ArrayList<Long>();
+		Statement stmt = null;
+	    try {
+	    	openConnection();
+	    	stmt = c.createStatement();
+	    	ResultSet rs = stmt.executeQuery( 
+	    			"SELECT * FROM Tweet ORDER BY fav_count DESC;" );
+	      int i = 0;
+	      while ( rs.next() && i < 10) {
+	         Long id = rs.getLong("tweet_id");
+	         result.add(id);
+	         
+	         String  name = rs.getString("author");
+	         String content = rs.getString("content");
+	         int fav = rs.getInt("fav_count");
+	         int retweet = rs.getInt("retweet_count");
+	         System.out.print( "ID = " + id + ", " );
+	         System.out.println( "AUTHOR = " + name );
+	         System.out.println(content);
+	         System.out.println("fav: "+fav + "  rt: " + retweet);
+	      }
+	      rs.close();
+	      stmt.close();
+	    } catch ( Exception e ) {
+	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	      System.exit(0);
+	    }
+	    System.out.println("choose retweeted done successfully");
+	    return result;
+	  }
+	
 }

@@ -108,6 +108,29 @@ public class TDemo {
 		}
 		SQLiteJDBC.deleteTopTweet(id);
 	}
+		
+		System.out.println("*****************************************");
+		ArrayList<Long> tw = SQLiteJDBC.choose10MostRetweeted();
+		 for (Long t : tw){
+			 try {
+					Status s = twitter.showStatus(t);
+					System.out.println("TEXT: " + s.getText());
+					System.out.println("retw: " + s.getRetweetCount() + "fav: " + s.getFavoriteCount());
+				} catch (TwitterException e) {
+					System.out.println("Failed to get tweet " + t);
+				}
+		 }
+			System.out.println("*****************************************");
+		tw = SQLiteJDBC.choose10MostFav();
+		for (Long t : tw){
+			 try {
+					Status s = twitter.showStatus(t);
+					System.out.println("TEXT: " + s.getText());
+					System.out.println("retw: " + s.getRetweetCount() + "fav: " + s.getFavoriteCount());
+				} catch (TwitterException e) {
+					System.out.println("Failed to get tweet " + t);
+				}
+		 }
 	}
 	
 }
