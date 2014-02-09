@@ -87,7 +87,6 @@ public class TDemo {
 			SQLiteJDBC.addTweets(tweets);
 		}
 		
-		System.out.println("*****************************************");
 		ArrayList<Long> tw = SQLiteJDBC.choose10MostRetweeted();
 		 for (long t : tw){
 			 try {
@@ -98,7 +97,6 @@ public class TDemo {
 					System.out.println("Failed to get tweet " + t);
 				}
 		 }
-			System.out.println("*****************************************");
 		tw = SQLiteJDBC.choose10MostFav();
 		for (Long t : tw){
 			 try {

@@ -28,8 +28,6 @@ public class SQLiteJDBC
 			"CREATE TABLE Tweet " +
 			"( tweet_id LONG PRIMARY KEY NOT NULL, " +
 			"author TEXT, " + 
-		//	"author_id LONG REFERENCES Users(id)" +
-		//	" DEFERRABLE INITIALLY DEFERRED, " +
 			"content TEXT  , " +
 			"fav_count LONG , " +
 			"retweet_count LONG )";  
@@ -100,29 +98,6 @@ public class SQLiteJDBC
 	    System.out.println("Records created successfully");		
 	}
 	
-	public static void writeFriends()
-	  {
-
-	    Statement stmt = null;
-	    try {
-	    	openConnection();
-	      stmt = c.createStatement();
-	      ResultSet rs = stmt.executeQuery( "SELECT * FROM Users;" );
-	      while ( rs.next() ) {
-	         long id = rs.getLong("id");
-	         String  name = rs.getString("username");
-	         System.out.print( "ID = " + id + ", " );
-	         System.out.println( "NAME = " + name );
-	      }
-	      rs.close();
-	      stmt.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
-	    }
-	    System.out.println("writeFriends done successfully");
-	  }
-
 	public static ArrayList<String> getFriends() {
 		ArrayList <String> result = new ArrayList<String>();
 
@@ -150,7 +125,6 @@ public class SQLiteJDBC
 	    	openConnection();
 	        stmt = c.createStatement();
 	          for (Status tweet : tweets){
-	        	//tweet.getText()
 	        	  String sql = "INSERT INTO Tweet (tweet_id, author, " +
 	    	        	"fav_count, retweet_count) VALUES (" +
 	    	        	tweet.getId() + ", '" + tweet.getUser().getScreenName() +
@@ -161,7 +135,6 @@ public class SQLiteJDBC
 	        	  } catch (SQLException e){
 	        		  System.err.println("insert:"+ e.getClass().getName() + ": " + e.getMessage() );
 	        	  }
-	        //	  System.out.println(sql);
 	          }
 	          stmt.close();
 	          c.commit();
@@ -169,94 +142,7 @@ public class SQLiteJDBC
 	    	System.err.println("exc: " +e.getClass().getName() + ": " + e.getMessage() );
 	    }  
 	}
-	public static void writeTweets()
-	  {
-	    Statement stmt = null;
-	    try {
-	    	openConnection();
-	      stmt = c.createStatement();
-	      ResultSet rs = stmt.executeQuery( "SELECT * FROM Tweet;" );
-	      while ( rs.next() ) {
-	         long id = rs.getLong("tweet_id");
-	         String  name = rs.getString("author");
-	         String content = rs.getString("content");
-	         int fav = rs.getInt("fav_count");
-	         int retweet = rs.getInt("retweet_count");
-	         System.out.print( "ID = " + id + ", " );
-	         System.out.println( "AUTHOR = " + name );
-	         System.out.println(content);
-	         System.out.println(fav + "  " + retweet);
-	      }
-	      rs.close();
-	      stmt.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
-	    }
-	    System.out.println("writeTweets done successfully");
-	  }
 
-	public static long chooseMostRetweeted(){
-		Statement stmt = null;
-		long id = 0;
-		try {
-	    	openConnection();
-	      stmt = c.createStatement();
-	     
-	      ResultSet rs = stmt.executeQuery("SELECT tweet_id, author, " +
-	    		  "fav_count, retweet_count FROM Tweet WHERE " +
-	    		  "retweet_count=(SELECT max(retweet_count) FROM Tweet);");
-	      id = rs.getLong("tweet_id");
-	      rs.close();
-	      stmt.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }
-		System.out.println("retweetd: " + id);
-	    return id;
-	}
-	public static long chooseMostFavourited(){
-		Statement stmt = null;
-		long id = 0;
-		try {
-	    	openConnection();
-	      stmt = c.createStatement();
-	     
-	      ResultSet rs = stmt.executeQuery("SELECT tweet_id, author, " +
-	    		  "fav_count, retweet_count FROM Tweet WHERE " +
-	    		  "fav_count=(SELECT max(fav_count) FROM Tweet);");
-	    
-	      id = rs.getLong("tweet_id");
-	      rs.close();
-	      stmt.close();
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }
-	    return id;
-	}
-	
-	public static void chooseTweets() {
-		
-		
-		
-	}
-	
-	public static void deleteTopTweet(long id){
-		Statement stmt = null;
-		try {
-	    	openConnection();
-	      stmt = c.createStatement();
-	      String sql = "UPDATE Tweet SET fav_count=0 WHERE tweet_id="+id+";";
-	      stmt.executeUpdate(sql);
-	      sql = "UPDATE Tweet SET retweet_count=0 WHERE tweet_id="+id+";";
-	      stmt.executeUpdate(sql);
-	      c.commit();
-	      stmt.close();
-	      c.wait(3000);
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	    }
-	}
 	
 	public static ArrayList<Long> choose10MostRetweeted()
 	  {
@@ -272,12 +158,6 @@ public class SQLiteJDBC
 	         Long id = rs.getLong("tweet_id");
 	         result.add(id);
 	         i++;
-	         String  name = rs.getString("author");
-	         String content = rs.getString("content");
-	         int fav = rs.getInt("fav_count");
-	         int retweet = rs.getInt("retweet_count");
-	         System.out.print(i + ": ID = " + id + ", " );
-	         System.out.println( "AUTHOR = " + name + "fav: "+fav + "  rt: " + retweet );
 	      }
 	      rs.close();
 	      stmt.close();
@@ -302,13 +182,6 @@ public class SQLiteJDBC
 	         Long id = rs.getLong("tweet_id");
 	         result.add(id);
 	         i++;
-	         String  name = rs.getString("author");
-	         String content = rs.getString("content");
-	         int fav = rs.getInt("fav_count");
-	         int retweet = rs.getInt("retweet_count");
-	         System.out.print(i + ": ID = " + id + ", " );
-	         System.out.println( "AUTHOR = " + name + "fav: "+fav + "  rt: " + retweet );
-
 	      }
 	      rs.close();
 	      stmt.close();
