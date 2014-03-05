@@ -6,7 +6,7 @@ public class Main {
 		 SQLiteJDBC.createDatabase();
 		 TDemo.login();	 
 		 TDemo.getFriends();
-		 TDemo.updateStatus("Jest 5:30 rano.");
+		 TDemo.updateStatus("Wiedz, że coś się dzieje.");
 		 TDemo.chooseTweets();
 	  }
 	 
